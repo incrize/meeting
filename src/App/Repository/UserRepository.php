@@ -45,7 +45,7 @@ class UserRepository implements UserRepositoryInterface
         }
 
         $this->users = array_filter($this->users, function (User $repoUser) use ($user) {
-            return $repoUser->getUid()->isEqual($user->getUid());
+            return !$repoUser->getUid()->isEqual($user->getUid());
         });
 
         return $user;
