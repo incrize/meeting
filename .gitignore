@@ -1,0 +1,10 @@
+*.bak
+*.DS_Store*
+*.sublime*
+*.sw*
+*~
+.buildpath
+.idea
+.vscode
+.project
+.projectile
