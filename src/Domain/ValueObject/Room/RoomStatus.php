@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Meeting\Domain\ValueObject\Room;
-
 
 use Meeting\Domain\Exception\DomainException;
 
@@ -41,5 +39,15 @@ class RoomStatus
     public static function createClosedStatus()
     {
         return new self(self::STATUS_CLOSED);
+    }
+
+    public function isEqual(RoomStatus $status)
+    {
+        return $this->status === $status->toString();
+    }
+
+    public function toString()
+    {
+        return $this->status;
     }
 }

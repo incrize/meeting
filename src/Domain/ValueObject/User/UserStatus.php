@@ -42,4 +42,14 @@ class UserStatus
     {
         return new self(self::STATUS_FIRED);
     }
+
+    public function isEqual(UserStatus $status)
+    {
+        return $this->status === $status->toString();
+    }
+
+    public function toString()
+    {
+        return $this->status;
+    }
 }
