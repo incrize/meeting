@@ -29,7 +29,6 @@ class UserRepositoryTest extends TestCase
 
     public function dataProviderFindById()
     {
-        $date = new DateTime();
 
         return [
             [
@@ -39,18 +38,18 @@ class UserRepositoryTest extends TestCase
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
                 new UserUid(1),
-                new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
                 new UserUid(44),
                 null,
@@ -72,7 +71,6 @@ class UserRepositoryTest extends TestCase
 
     public function dataProviderFindByStatus()
     {
-        $date = new DateTime();
 
         return [
             [
@@ -82,21 +80,21 @@ class UserRepositoryTest extends TestCase
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
                 UserStatus::createActiveStatus(),
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
                 UserStatus::createFiredStatus(),
                 [],
@@ -136,11 +134,11 @@ class UserRepositoryTest extends TestCase
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
+                new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
             ],
         ];
     }
@@ -152,15 +150,15 @@ class UserRepositoryTest extends TestCase
         return [
             [
                 [],
-                new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(99), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
+                new User(new UserUid(99), new UserName('Ivan'), UserStatus::createFiredStatus()),
             ],
         ];
     }
@@ -198,11 +196,11 @@ class UserRepositoryTest extends TestCase
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(1), new UserName('Igor'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Igor'), UserStatus::createActiveStatus()),
             ]
         ];
     }
@@ -214,11 +212,11 @@ class UserRepositoryTest extends TestCase
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(99), new UserName('Igor'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(99), new UserName('Igor'), UserStatus::createActiveStatus()),
             ]
         ];
     }
@@ -237,16 +235,15 @@ class UserRepositoryTest extends TestCase
     }
 
     public function dataProviderCreateNewUser() {
-        $date = new DateTime();
 
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(4), new UserName('Leonid'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(4), new UserName('Leonid'), UserStatus::createActiveStatus()),
             ]
         ];
     }
@@ -269,11 +266,11 @@ class UserRepositoryTest extends TestCase
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
-                new User(new UserUid(1), new UserName('Leonid'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Leonid'), UserStatus::createActiveStatus()),
             ]
         ];
     }
@@ -291,7 +288,6 @@ class UserRepositoryTest extends TestCase
 
     public function dataProviderCount()
     {
-        $date = new DateTime();
 
         return [
             [
@@ -301,9 +297,9 @@ class UserRepositoryTest extends TestCase
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus()),
                 ],
                 new UserSearchSpecification(),
                 3,

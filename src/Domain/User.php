@@ -31,18 +31,16 @@ class User
      * @param \Meeting\Domain\ValueObject\User\UserUid    $uid
      * @param \Meeting\Domain\ValueObject\User\UserName   $name
      * @param \Meeting\Domain\ValueObject\User\UserStatus $status
-     * @param \DateTime                                   $createdAt
-     * @param \DateTime                                   $updatedAt
      */
     public function __construct(
         UserUid $uid, UserName $name,
-        UserStatus $status, \DateTime $createdAt, \DateTime $updatedAt
+        UserStatus $status
     ) {
         $this->uid = $uid;
         $this->name = $name;
         $this->status = $status;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**

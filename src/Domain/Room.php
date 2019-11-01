@@ -35,19 +35,17 @@ class Room
      * @param \Meeting\Domain\ValueObject\Room\RoomName   $name
      * @param string                                      $description
      * @param \Meeting\Domain\ValueObject\Room\RoomStatus $status
-     * @param \DateTime                                   $createdAt
-     * @param \DateTime                                   $updatedAt
      */
     public function __construct(
         RoomUid $uid, RoomName $name, $description,
-        RoomStatus $status, \DateTime $createdAt, \DateTime $updatedAt
+        RoomStatus $status
     ) {
         $this->uid = $uid;
         $this->name = $name;
         $this->description = $description;
         $this->status = $status;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**

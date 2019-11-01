@@ -32,11 +32,11 @@ class MeetingServiceTest extends TestCase
 
         $meeting = new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus()),
             ]),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
@@ -44,11 +44,11 @@ class MeetingServiceTest extends TestCase
         $this->getMeetingRepository()->save($meeting);
 
         $service->createMeeting(
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
             new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus()),
             ]),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
@@ -62,11 +62,11 @@ class MeetingServiceTest extends TestCase
 
         $meeting = new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus()),
             ]),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
@@ -76,11 +76,11 @@ class MeetingServiceTest extends TestCase
         $service = $this->createService();
 
         $service->createMeeting(
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new Room(new RoomUid('2'), new RoomName('408'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+            new Room(new RoomUid('2'), new RoomName('408'), '', RoomStatus::createOpenStatus()),
             new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus()),
             ]),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
@@ -92,11 +92,11 @@ class MeetingServiceTest extends TestCase
         $service = $this->createService();
 
         $meeting = $service->createMeeting(
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new Room(new RoomUid('2'), new RoomName('408'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+            new Room(new RoomUid('2'), new RoomName('408'), '', RoomStatus::createOpenStatus()),
             new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
+                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
+                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus()),
             ]),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')

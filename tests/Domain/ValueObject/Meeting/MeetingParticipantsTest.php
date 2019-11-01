@@ -25,7 +25,7 @@ class MeetingParticipantsTest extends TestCase
         $this->expectException(DomainException::class);
 
         new MeetingParticipants([
-            new User(new UserUid('test'), new UserName('name'), UserStatus::createFiredStatus(), new \DateTime(), new \DateTime())
+            new User(new UserUid('test'), new UserName('name'), UserStatus::createFiredStatus())
         ]);
     }
 
@@ -50,6 +50,6 @@ class MeetingParticipantsTest extends TestCase
 
     protected function createUser($id, $status)
     {
-        return new User(new UserUid($id), new UserName('name'), $status, new \DateTime(), new \DateTime());
+        return new User(new UserUid($id), new UserName('name'), $status);
     }
 }
