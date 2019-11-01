@@ -76,4 +76,16 @@ class MeetingService
 
         return true;
     }
+
+    public function cancelMeeting()
+    {
+        // TODO: 2019-11-15
+    }
+
+    public function updateMeetingParticipants()
+    {
+        // TODO: 2019-11-15
+    }
+
+
 }
