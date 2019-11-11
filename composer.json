@@ -1,6 +1,7 @@
 {
     "name": "incrize/meeting",
     "type": "project",
+    "description": "",
     "require-dev": {
         "phpunit/phpunit": "^8.4"
     },
