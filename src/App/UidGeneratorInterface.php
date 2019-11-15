@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Meeting\Domain\Service;
+namespace Meeting\App;
 
 
 interface UidGeneratorInterface

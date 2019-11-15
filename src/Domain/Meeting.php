@@ -5,7 +5,6 @@ namespace Meeting\Domain;
 
 
 use Meeting\Domain\Exception\DomainException;
-use Meeting\Domain\ValueObject\Meeting\MeetingParticipants;
 use Meeting\Domain\ValueObject\Meeting\MeetingStatus;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
 
@@ -29,7 +28,7 @@ class Meeting
     /** @var \Meeting\Domain\User */
     protected $creator;
 
-    /** @var \Meeting\Domain\ValueObject\Meeting\MeetingParticipants */
+    /** @var \Meeting\Domain\User[] */
     protected $participants;
 
     /** @var \DateTime */
@@ -44,7 +43,6 @@ class Meeting
      * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid          $uid
      * @param \Meeting\Domain\Room                                    $room
      * @param \Meeting\Domain\User                                    $creator
-     * @param \Meeting\Domain\ValueObject\Meeting\MeetingParticipants $participants
      * @param \DateTime                                               $startsAt
      * @param \DateTime                                               $endsAt
      *
@@ -53,7 +51,7 @@ class Meeting
      */
     public function __construct(
         MeetingUid $uid, Room $room, User $creator,
-        MeetingParticipants $participants, \DateTime $startsAt, \DateTime $endsAt
+        \DateTime $startsAt, \DateTime $endsAt
     ) {
         $this->uid = $uid;
         $this->status = MeetingStatus::createActiveStatus();
@@ -62,7 +60,6 @@ class Meeting
 
         $this->setRoom($room);
         $this->setCreator($creator);
-        $this->setParticipants($participants);
         $this->setDates($startsAt, $endsAt);
     }
 
@@ -81,6 +78,8 @@ class Meeting
             throw new DomainException('Creator must be active');
         }
 
+        $this->removeParticipant($this->creator);
+        $this->addParticipant($creator);
         $this->creator = $creator;
     }
 
@@ -98,13 +97,30 @@ class Meeting
         $this->endsAt = $endsAt;
     }
 
-    public function setParticipants(MeetingParticipants $participants)
+    public function addParticipant(User $participant): void
     {
-        if (!$participants->has($this->creator)) {
-            throw new DomainException('Participants date invalid');
+        if (!$participant->getStatus()->isActive()) {
+            throw new DomainException('Participant must be active');
         }
 
-        $this->participants = $participants;
+        $this->participants[$participant->getUid()->toString()] = $participant;
+    }
+
+    public function addParticipants(array $participants): void
+    {
+        foreach ($participants as $participant) {
+            $this->addParticipant($participant);
+        }
+    }
+
+    public function hasParticipant(User $participant): bool
+    {
+        return isset($this->participants[$participant->getUid()->toString()]);
+    }
+
+    public function removeParticipant(User $participant): void
+    {
+        unset($this->participants[$participant->getUid()->toString()]);
     }
 
     /**
@@ -156,9 +172,9 @@ class Meeting
     }
 
     /**
-     * @return \Meeting\Domain\ValueObject\Meeting\MeetingParticipants
+     * @return \Meeting\Domain\User[]
      */
-    public function getParticipants(): ValueObject\Meeting\MeetingParticipants
+    public function getParticipants(): array
     {
         return $this->participants;
     }

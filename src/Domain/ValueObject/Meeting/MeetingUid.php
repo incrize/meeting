@@ -5,7 +5,7 @@ namespace Meeting\Domain\ValueObject\Meeting;
 
 
 use Meeting\Domain\Exception\DomainException;
-use Meeting\Domain\Service\UidGeneratorInterface;
+use Meeting\App\UidGeneratorInterface;
 
 class MeetingUid
 {

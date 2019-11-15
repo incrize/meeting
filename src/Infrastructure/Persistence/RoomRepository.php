@@ -1,6 +1,6 @@
 <?php
 
-namespace Meeting\Room;
+namespace Meeting\Infrastructure\Persistence;
 
 use Meeting\App\Exception\DuplicateRoomException;
 use Meeting\App\Exception\RoomNotFoundException;
@@ -8,6 +8,7 @@ use Meeting\App\ValueObject\Room\RoomSearchSpecification;
 use Meeting\Domain\Room;
 use Meeting\Domain\ValueObject\Room\RoomStatus;
 use Meeting\Domain\ValueObject\Room\RoomUid;
+use Meeting\Room\RoomRepositoryInterface;
 
 class RoomRepository implements RoomRepositoryInterface
 {

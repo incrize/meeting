@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Meeting\App\Service;
+namespace Meeting\App;
 
 
-use Meeting\Domain\Service\UidGeneratorInterface;
+use Meeting\App\UidGeneratorInterface;
 use Ramsey\Uuid\Uuid;
 
 class UidGenerator implements UidGeneratorInterface

@@ -3,7 +3,7 @@
 namespace Meeting\Tests\Unit;
 
 use DateTime;
-use Meeting\App\Repository\UserRepository;
+use Meeting\Infrastructure\Persistence\UserRepository;
 use Meeting\App\Exception\DuplicateUserException;
 use Meeting\Domain\User;
 use Meeting\Domain\ValueObject\User\UserName;
