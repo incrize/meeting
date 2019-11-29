@@ -197,4 +197,9 @@ class Meeting
     {
         return $this->endsAt;
     }
+
+    public function setStatus(MeetingStatus $status)
+    {
+        $this->status = $status;
+    }
 }

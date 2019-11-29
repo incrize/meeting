@@ -5,7 +5,9 @@ namespace Meeting\Domain;
 
 
 use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\MeetingNotExistsException;
 use Meeting\Domain\Repository\MeetingRepositoryInterface;
+use Meeting\Domain\ValueObject\Meeting\MeetingStatus;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
 
 class Schedule
@@ -22,7 +24,6 @@ class Schedule
      * @param \Meeting\Domain\Meeting   $meeting
      *
      * @throws \Meeting\Domain\Exception\DomainException
-     * @throws \Exception
      */
     public function addMeeting(Meeting $meeting): void
     {
@@ -37,11 +38,25 @@ class Schedule
         $this->meetingRepository->save($meeting);
     }
 
+    /**
+     * @param \Meeting\Domain\Room $room
+     * @param \DateTime            $startsAt
+     * @param \DateTime            $endsAt
+     *
+     * @return bool
+     */
     public function isRoomAvailable(Room $room, \DateTime $startsAt, \DateTime $endsAt): bool
     {
         return !$this->meetingRepository->isMeetingExists($room, $startsAt, $endsAt);
     }
 
+    /**
+     * @param array     $participants
+     * @param \DateTime $startsAt
+     * @param \DateTime $endsAt
+     *
+     * @return bool
+     */
     public function areParticipantsAvailable(array $participants, \DateTime $startsAt, \DateTime $endsAt): bool
     {
         foreach ($participants as $user) {
@@ -53,18 +68,37 @@ class Schedule
         return true;
     }
 
-    public function findMeeting(MeetingUid $meetingUid): Meeting
+    /**
+     * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid $meetingUid
+     *
+     * @return \Meeting\Domain\Meeting|null
+     * @throws \Meeting\Domain\Exception\DomainException
+     */
+    public function findMeeting(MeetingUid $meetingUid): ?Meeting
     {
+        $meeting = $this->meetingRepository->find($meetingUid);
+
+        if (!$meeting) {
+            throw new MeetingNotExistsException();
+        }
+
+        return $meeting;
 
     }
 
     /**
      * @param \Meeting\Domain\Meeting $meeting
+     *
      * @throws \Meeting\Domain\Exception\DomainException
      */
     public function cancelMeeting(Meeting $meeting): void
     {
-        // TODO: 2019-11-15
+        if ($meeting->getStatus()->isEqual(MeetingStatus::createCanceledStatus())) {
+            throw new DomainException('Meeting already canceled');
+        }
+
+        $meeting->setStatus(MeetingStatus::createCanceledStatus());
+
         $this->meetingRepository->save($meeting);
     }
 
@@ -76,7 +110,21 @@ class Schedule
      */
     public function updateMeetingParticipants(Meeting $meeting, array $participants): void
     {
-        // TODO: 2019-11-15
+        if (empty($participants)) {
+            throw new DomainException('Meeting must have participants');
+        }
+
+        $now = new \DateTime();
+        if ($meeting->getEndsAt() < $now) {
+            throw new DomainException('Meeting already over');
+        }
+
+        //some participants maybe already added to this meeting - no need to add them again
+        $old_participants = $meeting->getParticipants();
+        $new_participants = array_diff($participants, $old_participants);
+
+        $meeting->addParticipants($new_participants);
+
         $this->meetingRepository->save($meeting);
     }
 }

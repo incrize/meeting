@@ -10,12 +10,12 @@ class UserService implements UserServiceInterface
 
     public function fire(UserUid $uid): bool
     {
-        // TODO: Implement fire() method.
+
     }
 
     public function hire(User $user): bool
     {
-        // TODO: Implement hire() method.
+
     }
 
 }

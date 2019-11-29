@@ -4,10 +4,12 @@
 namespace Meeting\Infrastructure\Persistence;
 
 
+use Meeting\Domain\Exception\DomainException;
 use Meeting\Domain\Meeting;
 use Meeting\Domain\Repository\MeetingRepositoryInterface;
 use Meeting\Domain\Room;
 use Meeting\Domain\User;
+use Meeting\Domain\ValueObject\Meeting\MeetingUid;
 
 class MeetingRepository implements MeetingRepositoryInterface
 {
@@ -57,5 +59,14 @@ class MeetingRepository implements MeetingRepositoryInterface
         $this->storage[$meeting->getUid()->toString()] = $meeting;
 
         return true;
+    }
+
+    public function find(MeetingUid $meeting_uid) : ?Meeting
+    {
+        if (isset($this->storage[$meeting_uid->toString()])) {
+            return $this->storage[$meeting_uid->toString()];
+        } else {
+            return null;
+        }
     }
 }

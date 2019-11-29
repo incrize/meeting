@@ -7,6 +7,7 @@ namespace Meeting\Domain\Repository;
 use Meeting\Domain\Meeting;
 use Meeting\Domain\Room;
 use Meeting\Domain\User;
+use Meeting\Domain\ValueObject\Meeting\MeetingUid;
 
 interface MeetingRepositoryInterface
 {
@@ -15,4 +16,6 @@ interface MeetingRepositoryInterface
     public function isParticipantBusy(User $user, \DateTime $startsAt, \DateTime $endsAt): bool;
 
     public function save(Meeting $meeting): bool;
+
+    public function find(MeetingUid $meeting_uid) : ?Meeting;
 }
