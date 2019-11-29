@@ -36,13 +36,13 @@ class User
      */
     public function __construct(
         UserUid $uid, UserName $name,
-        UserStatus $status, \DateTime $createdAt, \DateTime $updatedAt
+        UserStatus $status, \DateTime $createdAt = null, \DateTime $updatedAt = null
     ) {
         $this->uid = $uid;
         $this->name = $name;
         $this->status = $status;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = ($createdAt) ? $createdAt : new \DateTime();
+        $this->updatedAt = ($updatedAt) ? $updatedAt : new \DateTime();
     }
 
     /**

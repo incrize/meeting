@@ -40,14 +40,14 @@ class Room
      */
     public function __construct(
         RoomUid $uid, RoomName $name, $description,
-        RoomStatus $status, \DateTime $createdAt, \DateTime $updatedAt
+        RoomStatus $status, \DateTime $createdAt = null, \DateTime $updatedAt = null
     ) {
         $this->uid = $uid;
         $this->name = $name;
         $this->description = $description;
         $this->status = $status;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = ($createdAt) ? $createdAt : new \DateTime();
+        $this->updatedAt = ($updatedAt) ? $updatedAt : new \DateTime();
     }
 
     /**

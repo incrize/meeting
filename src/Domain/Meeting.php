@@ -78,7 +78,10 @@ class Meeting
             throw new DomainException('Creator must be active');
         }
 
-        $this->removeParticipant($this->creator);
+        if (!empty($this->creator)) {
+            $this->removeParticipant($this->creator);
+        }
+
         $this->addParticipant($creator);
         $this->creator = $creator;
     }

@@ -27,12 +27,8 @@ class MeetingTest extends TestCase
 
         new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createClosedStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            ]),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createClosedStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
         );
@@ -45,12 +41,8 @@ class MeetingTest extends TestCase
 
         new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createFiredStatus(), new \DateTime(), new \DateTime()),
-            new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            ]),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createFiredStatus()),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
         );
@@ -63,12 +55,8 @@ class MeetingTest extends TestCase
 
         new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            ]),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new \DateTime('-1 day'),
             new \DateTime('+2 day')
         );
@@ -81,12 +69,8 @@ class MeetingTest extends TestCase
 
         new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            ]),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new \DateTime('+2 day'),
             new \DateTime('+1 day')
         );
@@ -96,12 +80,8 @@ class MeetingTest extends TestCase
     {
         $meeting = new Meeting(
             new MeetingUid('1'),
-            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus(), new \DateTime(), new \DateTime()),
-            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            new MeetingParticipants([
-                new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-                new User(new UserUid('2'), new UserName('Alexander'), UserStatus::createActiveStatus(), new \DateTime(), new \DateTime()),
-            ]),
+            new Room(new RoomUid('1'), new RoomName('407'), '', RoomStatus::createOpenStatus()),
+            new User(new UserUid('1'), new UserName('Ivan'), UserStatus::createActiveStatus()),
             new \DateTime('+1 day'),
             new \DateTime('+2 day')
         );
