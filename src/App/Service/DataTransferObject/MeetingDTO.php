@@ -47,6 +47,8 @@ class MeetingDTO
      * @param \DateTime $startsAt
      * @param \DateTime $endsAt
      */
+
+    // TODO: поля и значения актуальные для клиента
     public function __construct(
         \Meeting\Domain\ValueObject\Meeting\MeetingUid $uid = null,
         \Meeting\Domain\ValueObject\Meeting\MeetingStatus $status = null,

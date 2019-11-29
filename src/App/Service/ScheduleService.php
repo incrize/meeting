@@ -8,6 +8,7 @@ use Meeting\App\Service\DataTransferObject\MeetingDTO;
 use Meeting\Domain\Exception\DomainException;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
 
+// TODO: Move to Meeting\App namespace
 class ScheduleService
 {
     /** @var \Meeting\Domain\Schedule */
@@ -19,6 +20,7 @@ class ScheduleService
 
     public function createMeeting(MeetingDTO $meetingDTO)
     {
+        // TODO: retrieval should be realized here, not in DTO
         $meetingDTO->setUid(MeetingUid::create($this->uuidGenerator));
         $meeting = $meetingDTO->retrieval();
 

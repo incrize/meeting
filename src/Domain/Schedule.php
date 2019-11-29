@@ -71,13 +71,14 @@ class Schedule
     /**
      * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid $meetingUid
      *
-     * @return \Meeting\Domain\Meeting|null
+     * @return \Meeting\Domain\Meeting
      * @throws \Meeting\Domain\Exception\DomainException
      */
-    public function findMeeting(MeetingUid $meetingUid): ?Meeting
+    public function findMeeting(MeetingUid $meetingUid): Meeting
     {
         $meeting = $this->meetingRepository->find($meetingUid);
 
+        // TODO: that exception needed in getMeeting, no need here
         if (!$meeting) {
             throw new MeetingNotExistsException();
         }
@@ -119,6 +120,9 @@ class Schedule
             throw new DomainException('Meeting already over');
         }
 
+        // TODO: add validate for state of participants (busy, fired, not User)
+
+        // TODO: potential change to setParticipants
         //some participants maybe already added to this meeting - no need to add them again
         $old_participants = $meeting->getParticipants();
         $new_participants = array_diff($participants, $old_participants);

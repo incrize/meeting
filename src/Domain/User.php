@@ -33,6 +33,8 @@ class User
      * @param \Meeting\Domain\ValueObject\User\UserStatus $status
      * @param \DateTime                                   $createdAt
      * @param \DateTime                                   $updatedAt
+     *
+     * @throws \Exception
      */
     public function __construct(
         UserUid $uid, UserName $name,
