@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Meeting\App\Repository;
+namespace Meeting\Infrastructure\Persistence;
 
 
 use Meeting\Domain\Meeting;

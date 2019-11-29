@@ -4,7 +4,7 @@
 namespace Meeting\Test\App\Repository;
 
 
-use Meeting\App\Repository\MeetingRepository;
+use Meeting\Infrastructure\Persistence\MeetingRepository;
 use Meeting\Domain\Meeting;
 use Meeting\Domain\Room;
 use Meeting\Domain\User;

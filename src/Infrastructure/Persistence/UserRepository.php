@@ -1,9 +1,10 @@
 <?php
 
-namespace Meeting\App\Repository;
+namespace Meeting\Infrastructure\Persistence;
 
 use Meeting\App\Exception\DuplicateUserException;
 use Meeting\App\Exception\UserNotFoundException;
+use Meeting\App\Repository\UserRepositoryInterface;
 use Meeting\App\ValueObject\User\UserSearchSpecification;
 use Meeting\Domain\User;
 use Meeting\Domain\ValueObject\User\UserStatus;

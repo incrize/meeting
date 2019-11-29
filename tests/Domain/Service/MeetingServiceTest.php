@@ -125,12 +125,12 @@ class MeetingServiceTest extends TestCase
 }
 
 
-class MeetingRepository extends \Meeting\App\Repository\MeetingRepository
+class MeetingRepository extends \Meeting\Infrastructure\Persistence\MeetingRepository
 {
 
 }
 
-class UidGenerator extends \Meeting\App\Service\UidGenerator
+class UidGenerator extends \Meeting\App\UidGenerator
 {
 
 }
