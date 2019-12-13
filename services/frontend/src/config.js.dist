@@ -1,0 +1,4 @@
+export const config = {
+    apiUrl: 'https://example.com',
+    apiToken: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+}
