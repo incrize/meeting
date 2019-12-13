@@ -1,6 +1,7 @@
 import React from 'react';
 import { queryGet } from '../../api';
 import { useQuery } from '@apollo/react-hooks';
+import { EmployeesItem } from './employeesItem';
 
 export function EmployeesList() {
   const { loading, error, data } = useQuery(queryGet);
@@ -12,9 +13,7 @@ export function EmployeesList() {
       id,
       name
     }) => (
-    <li key={id}>
-      {name}
-    </li>
+      <EmployeesItem key={id} name={name}/>
   ))
 
   return (
