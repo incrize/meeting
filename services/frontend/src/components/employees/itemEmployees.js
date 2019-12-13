@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function EmployeesItem(props) {
+export function ItemEmployees(props) {
 
   return (
     <li>

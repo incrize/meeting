@@ -1,10 +1,10 @@
 import React from 'react';
-import { EmployeesList } from './employeesList';
+import { ListEmployees } from './listEmployees';
 
 export function Employees() {
   
   return (<div>
     <h2>Employees</h2>
-    <EmployeesList/>
+    <ListEmployees/>
   </div>);
 }

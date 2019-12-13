@@ -1,9 +1,9 @@
 import React from 'react';
 import { queryGet } from '../../api';
 import { useQuery } from '@apollo/react-hooks';
-import { EmployeesItem } from './employeesItem';
+import { ItemEmployees } from './itemEmployees';
 
-export function EmployeesList() {
+export function ListEmployees() {
   const { loading, error, data } = useQuery(queryGet);
 
   if (loading) return <p>Loading...</p>;
@@ -13,7 +13,7 @@ export function EmployeesList() {
       id,
       name
     }) => (
-      <EmployeesItem key={id} name={name}/>
+      <ItemEmployees key={id} name={name}/>
   ))
 
   return (
