@@ -93,6 +93,7 @@ class Schedule
     public function cancelMeeting(MeetingUid $meetingUid): void
     {
         $meeting = $this->meetingRepository->find($meetingUid);
+        //TODO === null
         if (!$meeting) {
             throw new MeetingNotExistsException('Canceling meeting is not exists');
         }
@@ -135,6 +136,7 @@ class Schedule
 
         if ($this->areParticipantsAvailable($participants, $meeting->getStartsAt(), $meeting->getEndsAt())) {
 
+            //TODO Domain events? Solve notification problem
             //some participants maybe already added to this meeting - no need to add them again
             $old_participants = $meeting->getParticipants();
             $new_participants = array_diff($participants, $old_participants);

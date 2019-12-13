@@ -32,6 +32,7 @@ class UserService implements UserServiceInterface
         } catch (UserNotFoundException $e) {
             return false;
         }
+        //TODO return true
         return !empty($user);
     }
 
@@ -40,6 +41,7 @@ class UserService implements UserServiceInterface
      *
      * @return bool
      */
+    //TODO User->UserDTO
     public function hire(User $user): bool
     {
         if (!$user->getStatus()->isActive()) {
