@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-boost';
-import { queryGet } from './employees';
+import { queryGet, queryAdd } from './employees';
 import { config } from '../config'
 
 export const apiClient = new ApolloClient({
@@ -14,4 +14,7 @@ export const apiClient = new ApolloClient({
   }
 });
 
-export { queryGet };
+export {
+  queryGet,
+  queryAdd
+};

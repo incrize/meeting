@@ -12,12 +12,11 @@ export const queryGet = gql `
 `;
 
 export const queryAdd = gql `
-  {
-    employeesList {
-      items {
-        id,
-        name
-      }
-    }
+mutation EmployeeCreate($data: EmployeeCreateInput!) {
+  employeeCreate(data: $data) {
+    id
+    name
+    status
   }
+}
 `;
