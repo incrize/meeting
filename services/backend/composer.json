@@ -13,20 +13,50 @@
         }
     ],
     "require": {
-        "ramsey/uuid": "^3.8"
+        "php": ">=7.2",
+        "ramsey/uuid": "^3.8",
+        "spiral/framework": "^2.4",
+        "spiral/console": "^1.3",
+        "spiral/jobs": "^2.0",
+        "spiral/roadrunner": "^1.5",
+        "spiral/encrypter": "^1.2",
+        "spiral/database": "^2.6",
+        "spiral/migrations": "^2.0",
+        "cycle/orm": "^1.1",
+        "cycle/proxy-factory": "^1.1",
+        "cycle/annotated": "^2.0",
+        "cycle/migrations": "^1.0",
+        "spiral/dotenv-bridge": "^1.0",
+        "spiral/http": "^1.2",
+        "spiral/router": "^1.4",
+        "spiral/validation": "^1.4",
+        "spiral/filters": "^1.3",
+        "spiral/monolog-bridge": "^1.1",
+        "spiral/nyholm-bridge": "^1.0",
+        "spiral/snapshots": "^1.0",
+        "spiral/auth": "^1.0",
+        "spiral/auth-http": "^1.0",
+        "spiral/security": "^2.2"
     },
 
     "autoload": {
         "psr-4": {
-            "Meeting\\": "src/"
+            "Meeting\\": "app/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Meeting\\Tests\\": "tests/"
+            "Meeting\\Tests\\": "app/tests/"
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "php -r \"!file_exists('.env') && copy('.env.sample', '.env');\"",
+            "php app.php encrypt:key -m .env",
+            "php app.php encrypt:key -m .env -p \"{frontend-api-key}\"",
+            "php app.php configure -vv",
+            "spiral get-binary"
+        ],
         "test": "phpunit"
     }
 }
