@@ -131,36 +131,32 @@ class UserRepositoryTest extends TestCase
 
     public function dataProviderDeleteExistingUser()
     {
-        $date = new DateTime();
-
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
+                new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
             ],
         ];
     }
 
     public function dataProviderDeleteMissingUser()
     {
-        $date = new DateTime();
-
         return [
             [
                 [],
-                new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Ignat')),
             ],
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan')),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(99), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
+                new User(new UserUid(99), new UserName('Ivan'), UserStatus::createFiredStatus()),
             ],
         ];
     }
@@ -193,32 +189,28 @@ class UserRepositoryTest extends TestCase
 
     public function dataProviderUpdateExistingUser()
     {
-        $date = new DateTime();
-
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(1), new UserName('Igor'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Igor')),
             ]
         ];
     }
 
     public function dataProviderUpdateMissingUser()
     {
-        $date = new DateTime();
-
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(99), new UserName('Igor'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(99), new UserName('Igor')),
             ]
         ];
     }
@@ -237,16 +229,14 @@ class UserRepositoryTest extends TestCase
     }
 
     public function dataProviderCreateNewUser() {
-        $date = new DateTime();
-
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(4), new UserName('Leonid'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(4), new UserName('Leonid')),
             ]
         ];
     }
@@ -264,16 +254,14 @@ class UserRepositoryTest extends TestCase
     }
 
     public function dataProviderCreateExistingUser() {
-        $date = new DateTime();
-
         return [
             [
                 [
-                    new User(new UserUid(1), new UserName('Ignat'), UserStatus::createActiveStatus(), $date, $date),
-                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus(), $date, $date),
-                    new User(new UserUid(3), new UserName('Albert'), UserStatus::createActiveStatus(), $date, $date),
+                    new User(new UserUid(1), new UserName('Ignat')),
+                    new User(new UserUid(2), new UserName('Ivan'), UserStatus::createFiredStatus()),
+                    new User(new UserUid(3), new UserName('Albert')),
                 ],
-                new User(new UserUid(1), new UserName('Leonid'), UserStatus::createActiveStatus(), $date, $date),
+                new User(new UserUid(1), new UserName('Leonid')),
             ]
         ];
     }

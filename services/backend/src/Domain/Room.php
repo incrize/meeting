@@ -7,6 +7,7 @@ namespace Meeting\Domain;
 use Meeting\Domain\ValueObject\Room\RoomName;
 use Meeting\Domain\ValueObject\Room\RoomStatus;
 use Meeting\Domain\ValueObject\Room\RoomUid;
+use DateTime;
 
 class Room
 {
@@ -37,17 +38,20 @@ class Room
      * @param \Meeting\Domain\ValueObject\Room\RoomStatus $status
      * @param \DateTime                                   $createdAt
      * @param \DateTime                                   $updatedAt
+     *
+     * @throws \Meeting\Domain\Exception\DomainException
+     * @throws \Exception
      */
     public function __construct(
-        RoomUid $uid, RoomName $name, $description,
-        RoomStatus $status, \DateTime $createdAt = null, \DateTime $updatedAt = null
+        RoomUid $uid, RoomName $name, $description = '',
+        RoomStatus $status = null, \DateTime $createdAt = null, \DateTime $updatedAt = null
     ) {
         $this->uid = $uid;
         $this->name = $name;
         $this->description = $description;
-        $this->status = $status;
-        $this->createdAt = ($createdAt) ? $createdAt : new \DateTime();
-        $this->updatedAt = ($updatedAt) ? $updatedAt : new \DateTime();
+        $this->status = ($status) ? $status : RoomStatus::createOpenStatus();
+        $this->createdAt = ($createdAt) ? $createdAt : new DateTime();
+        $this->updatedAt = ($updatedAt) ? $updatedAt : new DateTime();
     }
 
     /**

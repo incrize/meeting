@@ -7,6 +7,7 @@ namespace Meeting\Domain;
 use Meeting\Domain\ValueObject\User\UserName;
 use Meeting\Domain\ValueObject\User\UserStatus;
 use Meeting\Domain\ValueObject\User\UserUid;
+use DateTime;
 
 class User
 {
@@ -34,17 +35,20 @@ class User
      * @param \DateTime                                   $createdAt
      * @param \DateTime                                   $updatedAt
      *
+     * @throws \Meeting\Domain\Exception\User\UserUidInvalidException
+     * @throws \Meeting\Domain\Exception\User\UserNameInvalidException
+     * @throws \Meeting\Domain\Exception\User\UserStatusInvalidException
      * @throws \Exception
      */
     public function __construct(
         UserUid $uid, UserName $name,
-        UserStatus $status, \DateTime $createdAt = null, \DateTime $updatedAt = null
+        UserStatus $status = null, DateTime $createdAt = null, DateTime $updatedAt = null
     ) {
         $this->uid = $uid;
         $this->name = $name;
-        $this->status = $status;
-        $this->createdAt = ($createdAt) ? $createdAt : new \DateTime();
-        $this->updatedAt = ($updatedAt) ? $updatedAt : new \DateTime();
+        $this->status = ($status) ? $status : UserStatus::createActiveStatus();
+        $this->createdAt = ($createdAt) ? $createdAt : new DateTime();
+        $this->updatedAt = ($updatedAt) ? $updatedAt : new DateTime();
     }
 
     /**
@@ -72,7 +76,7 @@ class User
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -80,7 +84,7 @@ class User
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {

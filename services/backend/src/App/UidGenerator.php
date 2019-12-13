@@ -3,8 +3,6 @@
 
 namespace Meeting\App;
 
-
-use Meeting\App\UidGeneratorInterface;
 use Ramsey\Uuid\Uuid;
 
 class UidGenerator implements UidGeneratorInterface

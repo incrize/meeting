@@ -4,8 +4,8 @@
 namespace Meeting\Domain\ValueObject\Meeting;
 
 
-use Meeting\Domain\Exception\DomainException;
 use Meeting\App\UidGeneratorInterface;
+use Meeting\Domain\Exception\Meeting\MeetingUidInvalidException;
 
 class MeetingUid
 {
@@ -14,7 +14,7 @@ class MeetingUid
     public function __construct($uid)
     {
         if (empty($uid)) {
-            throw new DomainException('ID must be specified.');
+            throw new MeetingUidInvalidException('ID must be specified.');
         }
 
         $this->uid = $uid;

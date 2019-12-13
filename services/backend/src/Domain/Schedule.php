@@ -4,11 +4,18 @@
 namespace Meeting\Domain;
 
 
-use Meeting\Domain\Exception\DomainException;
-use Meeting\Domain\Exception\MeetingNotExistsException;
+use Meeting\Domain\Exception\Meeting\MeetingNotExistsException;
+use Meeting\Domain\Exception\User\ParticipantNotUserException;
+use Meeting\Domain\Exception\User\UserNotActiveException;
+use Meeting\Domain\Exception\Room\RoomNotAvaliableException;
+use Meeting\Domain\Exception\User\ParticipantsNotAvaliableException;
+use Meeting\Domain\Exception\Meeting\MeetingAlreadyCanceledException;
+use Meeting\Domain\Exception\Meeting\MeetingHasNoParticipantsException;
+use Meeting\Domain\Exception\Meeting\MeetingAlreadyOverException;
 use Meeting\Domain\Repository\MeetingRepositoryInterface;
 use Meeting\Domain\ValueObject\Meeting\MeetingStatus;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
+use DateTime;
 
 class Schedule
 {
@@ -28,11 +35,11 @@ class Schedule
     public function addMeeting(Meeting $meeting): void
     {
         if (!$this->isRoomAvailable($meeting->getRoom(), $meeting->getStartsAt(), $meeting->getEndsAt())) {
-            throw new DomainException('Room is not available');
+            throw new RoomNotAvaliableException('Room is not available');
         }
 
         if (!$this->areParticipantsAvailable($meeting->getParticipants(), $meeting->getStartsAt(), $meeting->getEndsAt())) {
-            throw new DomainException('Some participant is not available');
+            throw new ParticipantsNotAvaliableException('Some participant is not available');
         }
 
         $this->meetingRepository->save($meeting);
@@ -71,31 +78,26 @@ class Schedule
     /**
      * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid $meetingUid
      *
-     * @return \Meeting\Domain\Meeting
-     * @throws \Meeting\Domain\Exception\DomainException
+     * @return \Meeting\Domain\Meeting|null
      */
-    public function findMeeting(MeetingUid $meetingUid): Meeting
+    public function findMeeting(MeetingUid $meetingUid): ?Meeting
     {
-        $meeting = $this->meetingRepository->find($meetingUid);
-
-        // TODO: that exception needed in getMeeting, no need here
-        if (!$meeting) {
-            throw new MeetingNotExistsException();
-        }
-
-        return $meeting;
-
+        return $this->meetingRepository->find($meetingUid);
     }
 
     /**
      * @param \Meeting\Domain\Meeting $meeting
      *
-     * @throws \Meeting\Domain\Exception\DomainException
+     * @throws \Meeting\Domain\Exception\Meeting\MeetingAlreadyCanceledException
      */
-    public function cancelMeeting(Meeting $meeting): void
+    public function cancelMeeting(MeetingUid $meetingUid): void
     {
+        $meeting = $this->meetingRepository->find($meetingUid);
+        if (!$meeting) {
+            throw new MeetingNotExistsException('Canceling meeting is not exists');
+        }
         if ($meeting->getStatus()->isEqual(MeetingStatus::createCanceledStatus())) {
-            throw new DomainException('Meeting already canceled');
+            throw new MeetingAlreadyCanceledException('Meeting already canceled');
         }
 
         $meeting->setStatus(MeetingStatus::createCanceledStatus());
@@ -105,30 +107,40 @@ class Schedule
 
     /**
      * @param \Meeting\Domain\Meeting $meeting
-     * @param \Meeting\Domain\User[]  $participants
+     * @param array                   $participants
      *
-     * @throws \Meeting\Domain\Exception\DomainException
+     * @throws \Meeting\Domain\Exception\Meeting\MeetingHasNoParticipantsException
+     * @throws \Meeting\Domain\Exception\Meeting\MeetingAlreadyOverException
+     * @throws \Meeting\Domain\Exception\User\ParticipantNotUserException
+     * @throws \Meeting\Domain\Exception\User\UserNotActiveException
      */
     public function updateMeetingParticipants(Meeting $meeting, array $participants): void
     {
         if (empty($participants)) {
-            throw new DomainException('Meeting must have participants');
+            throw new MeetingHasNoParticipantsException('Meeting must have participants');
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($meeting->getEndsAt() < $now) {
-            throw new DomainException('Meeting already over');
+            throw new MeetingAlreadyOverException('Meeting already over');
         }
 
-        // TODO: add validate for state of participants (busy, fired, not User)
+        foreach ($participants as $participant) {
+            if (!($participant instanceof User)) {
+                throw new ParticipantNotUserException('Only users can be participants');
+            }elseif ($participant->getStatus()->isFired()) {
+                throw new UserNotActiveException('Only active users can be participants');
+            }
+        }
 
-        // TODO: potential change to setParticipants
-        //some participants maybe already added to this meeting - no need to add them again
-        $old_participants = $meeting->getParticipants();
-        $new_participants = array_diff($participants, $old_participants);
+        if ($this->areParticipantsAvailable($participants, $meeting->getStartsAt(), $meeting->getEndsAt())) {
 
-        $meeting->addParticipants($new_participants);
+            //some participants maybe already added to this meeting - no need to add them again
+            $old_participants = $meeting->getParticipants();
+            $new_participants = array_diff($participants, $old_participants);
 
-        $this->meetingRepository->save($meeting);
+            $meeting->addParticipants($new_participants);
+            $this->meetingRepository->save($meeting);
+        }
     }
 }

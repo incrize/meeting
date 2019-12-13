@@ -4,9 +4,12 @@
 namespace Meeting\Domain;
 
 
-use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\Meeting\MeetingDateInvalidException;
+use Meeting\Domain\Exception\Room\RoomNotOpenException;
+use Meeting\Domain\Exception\User\UserNotActiveException;
 use Meeting\Domain\ValueObject\Meeting\MeetingStatus;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
+use DateTime;
 
 class Meeting
 {
@@ -51,12 +54,12 @@ class Meeting
      */
     public function __construct(
         MeetingUid $uid, Room $room, User $creator,
-        \DateTime $startsAt, \DateTime $endsAt
+        DateTime $startsAt, DateTime $endsAt
     ) {
         $this->uid = $uid;
         $this->status = MeetingStatus::createActiveStatus();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
 
         $this->setRoom($room);
         $this->setCreator($creator);
@@ -66,7 +69,7 @@ class Meeting
     public function setRoom(Room $room)
     {
         if ($room->getStatus()->isClosed()) {
-            throw new DomainException('Room must be open');
+            throw new RoomNotOpenException('Room must be open');
         }
 
         $this->room = $room;
@@ -75,7 +78,7 @@ class Meeting
     public function setCreator(User $creator)
     {
         if (!$creator->getStatus()->isActive()) {
-            throw new DomainException('Creator must be active');
+            throw new UserNotActiveException('Creator must be active');
         }
 
         if (!empty($this->creator)) {
@@ -89,11 +92,11 @@ class Meeting
     public function setDates(\DateTime $startsAt, \DateTime $endsAt)
     {
         if ($startsAt->getTimestamp() < time()) {
-            throw new DomainException('Starts date invalid');
+            throw new MeetingDateInvalidException('Starts date invalid');
         }
 
         if ($endsAt->getTimestamp() < $startsAt->getTimestamp()) {
-            throw new DomainException('Ends date invalid');
+            throw new MeetingDateInvalidException('Ends date invalid');
         }
 
         $this->startsAt = $startsAt;
@@ -103,7 +106,7 @@ class Meeting
     public function addParticipant(User $participant): void
     {
         if (!$participant->getStatus()->isActive()) {
-            throw new DomainException('Participant must be active');
+            throw new UserNotActiveException('Participant must be active');
         }
 
         $this->participants[$participant->getUid()->toString()] = $participant;
@@ -180,6 +183,11 @@ class Meeting
     public function getParticipants(): array
     {
         return $this->participants;
+    }
+
+    public function setParticipants(array $participants)
+    {
+        $this->participants = $participants;
     }
 
     /**

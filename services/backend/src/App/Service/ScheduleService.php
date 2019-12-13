@@ -4,11 +4,23 @@
 namespace Meeting\App\Service;
 
 
-use Meeting\App\Service\DataTransferObject\MeetingDTO;
+use Meeting\App\DataTransferObject\MeetingDTO;
 use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\Meeting\MeetingAlreadyCanceledException;
+use Meeting\Domain\Exception\Meeting\MeetingAlreadyOverException;
+use Meeting\Domain\Exception\Meeting\MeetingHasNoParticipantsException;
+use Meeting\Domain\Exception\User\UserNameInvalidException;
+use Meeting\Domain\Exception\User\UserNotActiveException;
+use Meeting\Domain\Exception\User\ParticipantNotUserException;
+use Meeting\Domain\Exception\User\ParticipantsNotAvaliableException;
+use Meeting\Domain\Exception\Room\RoomNotAvaliableException;
+use Meeting\Domain\Exception\User\UserStatusInvalidException;
+use Meeting\Domain\Exception\User\UserUidInvalidException;
+use Meeting\Domain\Meeting;
+use Meeting\Domain\User;
 use Meeting\Domain\ValueObject\Meeting\MeetingUid;
+use Exception;
 
-// TODO: Move to Meeting\App namespace
 class ScheduleService
 {
     /** @var \Meeting\Domain\Schedule */
@@ -17,19 +29,39 @@ class ScheduleService
     /** @var \Meeting\App\UidGeneratorInterface */
     protected $uuidGenerator;
 
-
+    /**
+     * @param \Meeting\App\DataTransferObject\MeetingDTO $meetingDTO
+     *
+     * @return \Meeting\Domain\Meeting
+     *
+     * @throws \Meeting\Domain\Exception\Room\RoomNotAvaliableException
+     * @throws \Meeting\Domain\Exception\User\ParticipantsNotAvaliableException
+     */
     public function createMeeting(MeetingDTO $meetingDTO)
     {
-        // TODO: retrieval should be realized here, not in DTO
-        $meetingDTO->setUid(MeetingUid::create($this->uuidGenerator));
-        $meeting = $meetingDTO->retrieval();
+        try {
+            $meeting = new Meeting(
+                MeetingUid::create($this->uuidGenerator),
+                $meetingDTO->getRoom(),
+                $meetingDTO->getCreator(),
+                $meetingDTO->getStartsAt(),
+                $meetingDTO->getEndsAt()
+            );
+        } catch (DomainException $domainException) {
+            return null;
+        } catch (Exception $exception) {
+            return null;
+        }
+
+        $meeting->addParticipants($meetingDTO->getParticipants());
 
         try {
             $this->schedule->addMeeting($meeting);
-        } catch (DomainException $domainException) {
-
+        } catch (RoomNotAvaliableException $domainException) {
+            return null;
+        } catch (ParticipantsNotAvaliableException $domainException) {
+            return null;
         }
-        // TODO Specify exceptions for better workaround it
         // TODO Send notifications
 
         return $meeting;
@@ -37,33 +69,63 @@ class ScheduleService
 
     public function cancelMeeting(MeetingUid $meetingUid) : bool
     {
+        $meeting = $this->schedule->findMeeting($meetingUid);
+
+        if (!$meeting) {
+            return false;
+        }
         try {
-            $meeting = $this->schedule->findMeeting($meetingUid);
             $this->schedule->cancelMeeting($meeting);
-        } catch (DomainException $domain_exception) {
+        } catch (MeetingAlreadyCanceledException $domainException) {
             return false;
         }
 
-        // TODO Specify exceptions for better workaround it
         // TODO Send notifications
 
         return true;
     }
 
-    public function updateMeetingParticipants(MeetingUid $meetingUid, MeetingParticipantsDTO $meetingParticipantsDTO) : bool
+    /**
+     * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid $meetingUid
+     * @param array                                          $meetingParticipantsDTO
+     *
+     * @return bool
+     *
+     * @throws \Meeting\Domain\Exception\Meeting\MeetingHasNoParticipantsException
+     * @throws \Meeting\Domain\Exception\Meeting\MeetingAlreadyOverException
+     * @throws \Meeting\Domain\Exception\User\UserNotActiveException
+     * @throws \Meeting\Domain\Exception\User\ParticipantNotUserException
+     */
+    public function updateMeetingParticipants(MeetingUid $meetingUid, array $meetingParticipantsDTO) : bool
     {
-        // Not needed? MeetingParticipants no longer an object
-        // updateMeetingParticipants does not returns object - no returning object in here either
-
-        $meeting_participants = $meetingParticipantsDTO->retrieval();
+        $meetingParticipants = [];
+        foreach ($meetingParticipantsDTO as $meetingParticipantDTO) {
+            try {
+                $meetingParticipants[] = new User($meetingParticipantDTO['uid'], $meetingParticipantDTO['name']);
+            } catch (UserUidInvalidException $uidException) {
+                return false;
+            } catch (UserNameInvalidException $nameException) {
+                return false;
+            } catch (UserStatusInvalidException $statusException) {
+                return false;
+            } catch (Exception $exception) {
+                return false;
+            }
+        }
         try {
             $meeting = $this->schedule->findMeeting($meetingUid);
-            $this->schedule->updateMeetingParticipants($meeting, $meeting_participants);
-        } catch (DomainException $domainException) {
+            if ($meeting) {
+                $this->schedule->updateMeetingParticipants($meeting, $meetingParticipants);
+            }
+        } catch (MeetingHasNoParticipantsException $domainException) {
+            return false;
+        } catch (MeetingAlreadyOverException $domainException) {
+            return false;
+        } catch (UserNotActiveException $domainException) {
+            return false;
+        } catch (ParticipantNotUserException $domainException) {
             return false;
         }
-
-        // TODO Specify exceptions for better workaround it
         // TODO Send notifications
 
         return true;

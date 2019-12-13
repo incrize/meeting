@@ -3,8 +3,7 @@
 
 namespace Meeting\Domain\ValueObject\User;
 
-
-use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\User\UserStatusInvalidException;
 
 class UserStatus
 {
@@ -17,7 +16,7 @@ class UserStatus
     public function __construct($status)
     {
         if (!in_array($status, [self::STATUS_ACTIVE, self::STATUS_FIRED], true)) {
-            throw new DomainException('Status invalid');
+            throw new UserStatusInvalidException('Status invalid');
         }
 
         $this->status = $status;

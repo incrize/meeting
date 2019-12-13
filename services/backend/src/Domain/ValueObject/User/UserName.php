@@ -3,8 +3,7 @@
 
 namespace Meeting\Domain\ValueObject\User;
 
-
-use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\User\UserNameInvalidException;
 
 class UserName
 {
@@ -13,7 +12,7 @@ class UserName
     public function __construct($name)
     {
         if (empty($name)) {
-            throw new DomainException('Name must be specified.');
+            throw new UserNameInvalidException('Name must be specified.');
         }
 
         $this->name = $name;

@@ -4,7 +4,7 @@
 namespace Meeting\Domain\ValueObject\Room;
 
 
-use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\Room\RoomNameInvalidException;
 
 class RoomName
 {
@@ -13,7 +13,7 @@ class RoomName
     public function __construct($name)
     {
         if (empty($name)) {
-            throw new DomainException('Name must be specified.');
+            throw new RoomNameInvalidException('Name must be specified.');
         }
 
         $this->name = $name;

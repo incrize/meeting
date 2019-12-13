@@ -3,8 +3,8 @@
 
 namespace Meeting\Domain\ValueObject\User;
 
+use Meeting\Domain\Exception\User\UserUidInvalidException;
 
-use Meeting\Domain\Exception\DomainException;
 
 class UserUid
 {
@@ -13,7 +13,7 @@ class UserUid
     public function __construct($uid)
     {
         if (empty($uid)) {
-            throw new DomainException('ID must be specified.');
+            throw new UserUidInvalidException('ID must be specified.');
         }
 
         $this->uid = $uid;

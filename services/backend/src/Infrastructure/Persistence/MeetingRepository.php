@@ -4,7 +4,7 @@
 namespace Meeting\Infrastructure\Persistence;
 
 
-use Meeting\Domain\Exception\DomainException;
+use DateTime;
 use Meeting\Domain\Meeting;
 use Meeting\Domain\Repository\MeetingRepositoryInterface;
 use Meeting\Domain\Room;
@@ -16,7 +16,7 @@ class MeetingRepository implements MeetingRepositoryInterface
     /** @var \Meeting\Domain\Meeting[] */
     protected $storage = [];
 
-    public function isMeetingExists(Room $room, \DateTime $startsAt, \DateTime $endsAt): bool
+    public function isMeetingExists(Room $room, DateTime $startsAt, DateTime $endsAt): bool
     {
         foreach ($this->storage as $meeting) {
             if (!$meeting->getRoom()->getUid()->isEqual($room->getUid())) {
@@ -33,7 +33,7 @@ class MeetingRepository implements MeetingRepositoryInterface
         return false;
     }
 
-    public function isParticipantBusy(User $user, \DateTime $startsAt, \DateTime $endsAt): bool
+    public function isParticipantBusy(User $user, DateTime $startsAt, DateTime $endsAt): bool
     {
         foreach ($this->storage as $meeting) {
             foreach ($meeting->getParticipants() as $participant) {

@@ -2,7 +2,7 @@
 
 namespace Meeting\Domain\ValueObject\Room;
 
-use Meeting\Domain\Exception\DomainException;
+use Meeting\Domain\Exception\Room\RoomStatusInvalidException;
 
 class RoomStatus
 {
@@ -15,7 +15,7 @@ class RoomStatus
     public function __construct($status)
     {
         if (!in_array($status, [self::STATUS_OPEN, self::STATUS_CLOSED], true)) {
-            throw new DomainException('Status invalid');
+            throw new RoomStatusInvalidException('Status invalid');
         }
 
         $this->status = $status;
