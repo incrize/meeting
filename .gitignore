@@ -8,3 +8,4 @@
 .vscode
 .project
 .projectile
+.phpunit.result.cache
