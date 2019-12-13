@@ -1,0 +1,9 @@
+tags
+*.cov
+.cover
+target
+*.xls
+*.xlsx
+*.bdb
+var/
+.vscode/
