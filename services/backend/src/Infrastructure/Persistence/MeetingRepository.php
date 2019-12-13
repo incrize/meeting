@@ -16,6 +16,13 @@ class MeetingRepository implements MeetingRepositoryInterface
     /** @var \Meeting\Domain\Meeting[] */
     protected $storage = [];
 
+    /**
+     * @param \Meeting\Domain\Room $room
+     * @param \DateTime            $startsAt
+     * @param \DateTime            $endsAt
+     *
+     * @return bool
+     */
     public function isMeetingExists(Room $room, DateTime $startsAt, DateTime $endsAt): bool
     {
         foreach ($this->storage as $meeting) {
@@ -33,6 +40,13 @@ class MeetingRepository implements MeetingRepositoryInterface
         return false;
     }
 
+    /**
+     * @param \Meeting\Domain\User $user
+     * @param \DateTime            $startsAt
+     * @param \DateTime            $endsAt
+     *
+     * @return bool
+     */
     public function isParticipantBusy(User $user, DateTime $startsAt, DateTime $endsAt): bool
     {
         foreach ($this->storage as $meeting) {
@@ -54,6 +68,11 @@ class MeetingRepository implements MeetingRepositoryInterface
         return false;
     }
 
+    /**
+     * @param \Meeting\Domain\Meeting $meeting
+     *
+     * @return bool
+     */
     public function save(Meeting $meeting): bool
     {
         $this->storage[$meeting->getUid()->toString()] = $meeting;
@@ -61,6 +80,11 @@ class MeetingRepository implements MeetingRepositoryInterface
         return true;
     }
 
+    /**
+     * @param \Meeting\Domain\ValueObject\Meeting\MeetingUid $meeting_uid
+     *
+     * @return \Meeting\Domain\Meeting|null
+     */
     public function find(MeetingUid $meeting_uid) : ?Meeting
     {
         if (isset($this->storage[$meeting_uid->toString()])) {

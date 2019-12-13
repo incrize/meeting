@@ -103,6 +103,11 @@ class Meeting
         $this->endsAt = $endsAt;
     }
 
+    /**
+     * @param \Meeting\Domain\User $participant
+     *
+     * @throws \Meeting\Domain\Exception\User\UserNotActiveException
+     */
     public function addParticipant(User $participant): void
     {
         if (!$participant->getStatus()->isActive()) {
@@ -115,7 +120,11 @@ class Meeting
     public function addParticipants(array $participants): void
     {
         foreach ($participants as $participant) {
-            $this->addParticipant($participant);
+            try {
+                $this->addParticipant($participant);
+            } catch (UserNotActiveException $e) {
+                return;
+            }
         }
     }
 

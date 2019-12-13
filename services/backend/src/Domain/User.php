@@ -75,6 +75,11 @@ class User
         return $this->status;
     }
 
+    public function setStatus(UserStatus $status)
+    {
+        $this->status = $status;
+    }
+
     /**
      * @return DateTime
      */

@@ -128,7 +128,7 @@ class Schedule
         foreach ($participants as $participant) {
             if (!($participant instanceof User)) {
                 throw new ParticipantNotUserException('Only users can be participants');
-            }elseif ($participant->getStatus()->isFired()) {
+            } elseif ($participant->getStatus()->isFired()) {
                 throw new UserNotActiveException('Only active users can be participants');
             }
         }
